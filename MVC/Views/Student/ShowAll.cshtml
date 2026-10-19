@@ -1,0 +1,14 @@
+﻿@model List<Student> // model --> بكتب بعدها التايب  اللي بيبقا شايل الموديل بروبرتي بعدها الموديل كابتل هيبقا نوعها ليست
+
+<table class="table table-bordered table-hover">
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>@item.ID</td>
+			<td>@item.Name</td>
+			<td>
+				<img src="~/Images/@item.ImageURL" style="width:80px" />
+			</td>
+		</tr>
+	}
+</table>
