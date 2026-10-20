@@ -1,0 +1,40 @@
+﻿@model Employee
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<h2 style="color:@ViewBag.Color">@Model.Name</h2>  @* using ViewBag to set the h2 color *@
+
+<hr />
+
+@*--------------------------------passing data using----------------------------------------*@
+@*--------------------------------------ViewData--------------------------------------------*@
+
+<h1>@ViewData["Msg"]</h1>
+
+@* using ViewData *@
+<h2>@(int.Parse(ViewData["Temp"].ToString()) + 10)</h2> @* parsing (unboxing to the temp) *@
+
+@* using ViewData *@
+<select class="form form-control form-check-inline">
+	@foreach (var item in (List<string>)ViewData["Brchs"])  @* casting the string to List *@
+	{
+		<option>@item</option>
+	}
+</select>
+
+@*--------------------------------passing data using----------------------------------------*@
+@*--------------------------------------ViewBag---------------------------------------------*@
+
+@* using ViewBag *@
+<h2>@(ViewBag.Temp + 10)</h2> @* parsing (unboxing to the temp) *@
+
+@* using ViewBag *@
+<select class="form form-control form-check-inline">
+	@foreach (var item in ViewBag.Brchs)  @* casting the string to List *@
+	{
+		<option>@item</option>
+	}
+</select>

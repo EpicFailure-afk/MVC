@@ -6,6 +6,8 @@ namespace MVC.Controllers
   public class DepartmentController : Controller
   {
     Context context = new Context();
+
+    //Department/Index
     public IActionResult Index()
     {
       List<Department> departmentList = context.Department.ToList();
