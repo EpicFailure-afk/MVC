@@ -64,5 +64,52 @@ namespace MVC.Controllers
       return View("DetailsVM", EmpVM);
     }
     #endregion
+
+    // Endpoint to view all Emps
+    //Employee/Index
+    public IActionResult Index()
+    {
+      return View("Index", context.employee.ToList());
+    }
+
+    // handle Link to edit view 
+    //Employee/Edit?id=id
+    public IActionResult Edit(int id)
+    {
+      Employee empModel = context.employee.FirstOrDefault(e => e.Id == id);
+      List<Department> DepartmentList = context.Department.ToList();
+      //------- create viewModel and mapping
+      EmpWithDeptListViewModel EmpViewModel = new EmpWithDeptListViewModel();
+      EmpViewModel.Id = empModel.Id;
+      EmpViewModel.Name = empModel.Name;
+      EmpViewModel.Address = empModel.Address;
+      EmpViewModel.ImageUrl = empModel.ImageUrl;
+      EmpViewModel.JobTitle = empModel.JobTitle;
+      EmpViewModel.Salary = empModel.Salary;
+      EmpViewModel.DeptList = DepartmentList;
+
+      return View("Edit", EmpViewModel);  //Model type --> EmpWithDeptListViewModel
+    }
+
+    // Save Edit
+    [HttpPost]
+    public IActionResult SaveEdit(int id, EmpWithDeptListViewModel EmpFromRequest)
+    {
+      if (EmpFromRequest.Name != null)
+      {
+        // save in database
+        Employee EmpFromDB = context.employee.FirstOrDefault(e => e.Id == id);
+        EmpFromDB.Address = EmpFromRequest.Address;
+        EmpFromDB.Name = EmpFromRequest.Name;
+        EmpFromDB.Salary = EmpFromRequest.Salary;
+        EmpFromDB.JobTitle = EmpFromRequest.JobTitle;
+        EmpFromDB.ImageUrl = EmpFromRequest.ImageUrl;
+        EmpFromDB.DeptID = EmpFromRequest.DeptID;
+        context.SaveChanges();
+        // after success
+        return RedirectToAction("Index");
+      }
+      return View("Edit", EmpFromRequest);
+    }
   }
 }
