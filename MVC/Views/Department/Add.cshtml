@@ -1,0 +1,24 @@
+﻿@model Department
+
+@{
+	ViewData["Title"] = "Add";
+}
+
+<h1>Add</h1>
+
+<!-- when press on submit req: /Department/SaveAdd?name=SD&ManagerName=Ahmed  (in case of get method) -->
+<!--method=post-->
+<form method="post" action="/Department/SaveAdd">
+	<div>
+		<lablel>Name</lablel>
+		<input name="Name" value="@Model?.Name" type="text" class="form form-control"/>
+	</div>
+	<div>
+		<lablel>Manager Name</lablel>
+		<input name="ManagerName" value="@Model?.ManagerName" type="text" class="form form-control" />
+	</div>
+	<br />
+	<input type="submit" vlaue="Create" class="btn btn-primary"/>
+</form>
+
+<a href="/Department/Index">Back To List</a>

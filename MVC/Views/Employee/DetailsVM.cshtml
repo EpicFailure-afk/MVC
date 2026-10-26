@@ -1,0 +1,21 @@
+﻿@* @using MVC.ViewModel *@
+@model EmpDeptColorTempMsgBrchViewModel
+
+@* if we have folder that we created ourselves we should the full path to the ViewModel we need to use *@
+@* or we can use the keyword --> @using *@
+@* or put the using in the file "_ViewImports" that exists in the Views Folder *@
+
+@{
+	ViewData["Title"] = "DetailsVM";
+}
+
+<h1 style="color:@Model.Color">DetailsVM</h1>
+
+<h2>@(Model.EmpName) works at @(Model.DeptName) Department</h2>
+
+<select>
+	@foreach(var item in Model.Branches)
+	{
+		<option>@item</option>
+	}
+</select>
