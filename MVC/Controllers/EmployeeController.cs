@@ -109,7 +109,13 @@ namespace MVC.Controllers
         // after success
         return RedirectToAction("Index");
       }
+      EmpFromRequest.DeptList = context.Department.ToList();  // ?? 
       return View("Edit", EmpFromRequest);
+      // In that return we send the view of "Edit"
+      // with EmpFromRequest (viewModel), which contains All Emp Data + list of depts
+      // list of depts = null which will through an exception 
+      // so we need to pass a list of depts also in the else statement
+      // ViewData, ViewBag,ViewModel --> Scope: 1 Action for 1 View 
     }
   }
 }

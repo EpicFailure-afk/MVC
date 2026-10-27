@@ -6,10 +6,22 @@
 
 <h1>Edit</h1>
 
-<form method="post" action="/Employee/SaveEdit/@Model.Id">
+<form method="post" asp-action="SaveEdit" asp-route-id="@Model.Id"/>   @*action="/Employee/SaveEdit/@Model.Id">*@
 	<div>
 		<lable>Name</lable>
-		<input type="text" value="@Model.Name" id="Name" name="Name" class="form-check form-control" />
+		@* <input type="text" value="@Model.Name" id="Name" name="Name" class="form-check form-control" /> *@
+		
+		@Html.LabelFor(e => e.Name)
+		@Html.EditorFor(e => e.Name)
+		@*diff between LabelFor and EditorFor: EditorFor decides which type is better*@
+
+		@*Mix-server-side-attr*@
+		<label asp-for="Name"></label>
+		<input class="form form-control" asp-for="Name" />
+
+		@Html.TextBox("Name")  @*Lossly type helper*@
+		@Html.TextBoxFor(e => e.Name, new { style = "color:red", @class = "form-check form-control" }) @*strong type helper*@
+		
 	</div>
 
 	<div>
@@ -52,3 +64,19 @@
 
 	<input type="submit" value="Save" class="btn btn-success"/>
 </form>
+
+@*-------------------------------------Link With Helper------------------------------------*@
+
+<a href="/Employee/Index">Back To List</a> @*html link*@
+@Html.ActionLink("Back", "Index", "Employee")
+
+@*mix server side attr*@
+<a asp-action="Index" asp-controller="Employee">Back</a>
+
+<hr />
+
+<a href="/Employee/Details/@Model.Id">Details</a> @*html link*@
+@Html.ActionLink("--Details--", "Details", "Employee", new {@Model.Id})
+
+@*mix server side attr*@
+<a asp-action="Details" asp-controller="Employee" asp-route-id="@Model.Id">Details</a>
