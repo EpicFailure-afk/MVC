@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC.Models;
 using MVC.ViewModel;
@@ -7,9 +8,10 @@ namespace MVC.Controllers
 {
   public class EmployeeController : Controller
   {
-    Context context = new Context(); // 
+    Context context = new Context();
 
     #region using ViewData & ViewBag
+    // View Details about Emp
     //Employee/Details?id=id
     public IActionResult Details(int id)
     {
@@ -99,6 +101,7 @@ namespace MVC.Controllers
       {
         // save in database
         Employee EmpFromDB = context.employee.FirstOrDefault(e => e.Id == id);
+
         EmpFromDB.Address = EmpFromRequest.Address;
         EmpFromDB.Name = EmpFromRequest.Name;
         EmpFromDB.Salary = EmpFromRequest.Salary;
@@ -116,6 +119,34 @@ namespace MVC.Controllers
       // list of depts = null which will through an exception 
       // so we need to pass a list of depts also in the else statement
       // ViewData, ViewBag,ViewModel --> Scope: 1 Action for 1 View 
+    }
+
+    // Add new Emp
+    //Employee/New
+    [HttpGet]
+    public IActionResult New()
+    {
+      ViewData["DeptList"] = context.Department.ToList();
+      return View("New"); // open "New" View 
+    }
+
+    [HttpPost]
+    public IActionResult SaveNew(Employee EmpFromReq)
+    {
+      // Validation 
+      if(EmpFromReq.Name!=null && EmpFromReq.Salary>=6000)
+      {
+        // if valid --> save at database
+        context.employee.Add(EmpFromReq);
+        context.SaveChanges();
+        return RedirectToAction("Index");  // after saving the data go to Index View 
+        // NOTE: - the View Index Must be in the sane Controller 
+        //       - if the View has a route values as a parameter
+        //         must be passed in an anonymous object that carries that route value + any additional parameters
+        //       - if the action in another controller we will pass ("Action", "Controller", new {id = EmpFromReq.Id}
+      }
+      ViewData["DeptList"] = context.Department.ToList();
+      return View("New", EmpFromReq);  // else if not valid back to the action that req came from with the req itself
     }
   }
 }

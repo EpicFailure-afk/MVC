@@ -1,0 +1,49 @@
+﻿@model Employee
+  
+@{
+	ViewData["Title"] = "New";
+	SelectList deptOptions = new SelectList(ViewBag.DeptList, "Id", "Name");
+}
+
+<h1>New</h1>
+
+<form method="post" asp-action="SaveNew" asp-controller="Employee" >  @* when submit --> SaveNew *@
+	<div>
+		<label asp-for="Name"></label>
+		<input class="form form-control" asp-for="Name"/>
+	</div>
+
+	<div>
+		<label asp-for="Salary"></label>
+		<input class="form form-control" asp-for="Salary"/>
+	</div>
+
+	<div>
+		<label asp-for="Address"></label>
+		<input class="form form-control" asp-for="Address"/>
+	</div>
+
+	<div>
+		<label asp-for="ImageUrl"></label>
+		<input class="form form-control" asp-for="ImageUrl"/>
+	</div>
+
+	<div>
+		<label asp-for="JobTitle"></label>
+		<input class="form form-control" asp-for="JobTitle" />
+	</div>
+
+	<div>
+		<label asp-for="DeptID"></label>
+		@* <input class="form form-control" asp-for="DeptID"/> *@
+		<select class="form form-control"
+				asp-items="deptOptions"
+				asp-for="DeptID">
+			<option value="0">--Select Department--</option>  @* like place holder but this need a validation to confirm the deptId is not = 0*@
+		</select>
+
+	</div>
+
+	<input type="submit" value="Create" class="btn btn-success"/>
+</form>
+<a asp-action="Index">Back To List</a>
