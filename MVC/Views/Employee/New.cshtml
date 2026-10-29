@@ -11,26 +11,32 @@
 	<div>
 		<label asp-for="Name"></label>
 		<input class="form form-control" asp-for="Name"/>
+		<span asp-validation-for="Name" class="text-danger"></span>
 	</div>
 
 	<div>
 		<label asp-for="Salary"></label>
 		<input class="form form-control" asp-for="Salary"/>
+		<span asp-validation-for="Salary" class="text-danger"></span>
 	</div>
 
 	<div>
 		<label asp-for="Address"></label>
 		<input class="form form-control" asp-for="Address"/>
+		<span asp-validation-for="Address" class="text-danger"></span>
+
 	</div>
 
 	<div>
 		<label asp-for="ImageUrl"></label>
 		<input class="form form-control" asp-for="ImageUrl"/>
+		<span asp-validation-for="ImageUrl" class="text-danger"></span>
 	</div>
 
 	<div>
 		<label asp-for="JobTitle"></label>
 		<input class="form form-control" asp-for="JobTitle" />
+		<span asp-validation-for="JobTitle" class="text-danger"></span>
 	</div>
 
 	<div>
@@ -41,7 +47,7 @@
 				asp-for="DeptID">
 			<option value="0">--Select Department--</option>  @* like place holder but this need a validation to confirm the deptId is not = 0*@
 		</select>
-
+		<span asp-validation-for="DeptID" class="text-danger"></span>
 	</div>
 
 	<input type="submit" value="Create" class="btn btn-success"/>

@@ -97,7 +97,8 @@ namespace MVC.Controllers
     [HttpPost]
     public IActionResult SaveEdit(int id, EmpWithDeptListViewModel EmpFromRequest)
     {
-      if (EmpFromRequest.Name != null)
+      //if (EmpFromRequest.Name != null)
+      if(ModelState.IsValid)  // check what is ModelState and how it works 
       {
         // save in database
         Employee EmpFromDB = context.employee.FirstOrDefault(e => e.Id == id);
@@ -134,7 +135,7 @@ namespace MVC.Controllers
     public IActionResult SaveNew(Employee EmpFromReq)
     {
       // Validation 
-      if(EmpFromReq.Name!=null && EmpFromReq.Salary>=6000)
+      if(ModelState.IsValid) // && EmpFromReq.Salary>=6000)  // performance ??
       {
         // if valid --> save at database
         context.employee.Add(EmpFromReq);
