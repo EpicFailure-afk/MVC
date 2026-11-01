@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVC.Models
@@ -12,7 +13,10 @@ namespace MVC.Models
     [Required(ErrorMessage ="You must type a name")]
     [MaxLength(25, ErrorMessage = "write a human name !!")]
     [MinLength(2, ErrorMessage = "Name must be more than 2 letters")]
-    [UniqueName]
+    //[UniqueName]
+
+    // Custom validator --> Name Must contain "dev"
+    [Remote(action:"CheckName", controller:"Employee", ErrorMessage = "Name Must Contain dev")]
     public string Name { get; set; }
     //[RegularExpression(@"^[0-9] {6000, }$")]
 

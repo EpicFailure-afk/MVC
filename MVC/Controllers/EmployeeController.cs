@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC.Models;
@@ -162,6 +163,15 @@ namespace MVC.Controllers
       // if not valid back to the action that req came from with the req itself
       ViewData["DeptList"] = context.Department.ToList();
       return View("New", EmpFromReq);  
+    }
+
+    // Remote Attribute using Ajax Call
+    [HttpGet]
+    public IActionResult CheckName(string Name)
+    {
+      if (Name.Contains("dev"))
+        return Json(true);
+      return Json(false);
     }
   }
 }
