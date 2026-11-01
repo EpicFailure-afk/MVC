@@ -15,7 +15,7 @@ namespace MVC.Models
     public string Name { get; set; }
     //[RegularExpression(@"^[0-9] {6000, }$")]
 
-    [Range(1000, 1000000,ErrorMessage ="Salary Must be more than {1}")]
+    //[Range(1000, 1000000,ErrorMessage ="Salary Must be more than {1}")]
     public int Salary { get; set; }
 
     [Display(Name="Job Title")]
@@ -31,6 +31,9 @@ namespace MVC.Models
     public int DeptID { get; set; }
 
     //nav-props
-    public Department Department { get; set; }
+
+    // Nullable because MVC POST sends DeptID, not the Department navigation object.
+    // Without ?, nullable reference validation treats Department as required.
+    public Department? Department { get; set; }
   }
 }

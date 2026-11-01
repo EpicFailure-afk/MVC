@@ -8,6 +8,8 @@
 <h1>New</h1>
 
 <form method="post" asp-action="SaveNew" asp-controller="Employee" >  @* when submit --> SaveNew *@
+	<div asp-validation-summary="All" class="text-danger"></div>
+	
 	<div>
 		<label asp-for="Name"></label>
 		<input class="form form-control" asp-for="Name"/>
@@ -47,9 +49,10 @@
 				asp-for="DeptID">
 			<option value="0">--Select Department--</option>  @* like place holder but this need a validation to confirm the deptId is not = 0*@
 		</select>
-		<span asp-validation-for="DeptID" class="text-danger"></span>
+		<span asp-validation-for="DeptID" class="text-danger"></span> 
 	</div>
 
+	<br />
 	<input type="submit" value="Create" class="btn btn-success"/>
 </form>
 <a asp-action="Index">Back To List</a>

@@ -137,17 +137,31 @@ namespace MVC.Controllers
       // Validation 
       if(ModelState.IsValid) // && EmpFromReq.Salary>=6000)  // performance ??
       {
-        // if valid --> save at database
-        context.employee.Add(EmpFromReq);
-        context.SaveChanges();
-        return RedirectToAction("Index");  // after saving the data go to Index View 
-        // NOTE: - the View Index Must be in the sane Controller 
-        //       - if the View has a route values as a parameter
-        //         must be passed in an anonymous object that carries that route value + any additional parameters
-        //       - if the action in another controller we will pass ("Action", "Controller", new {id = EmpFromReq.Id}
+        // custom validation Dept_ID != 0
+        if (EmpFromReq.DeptID != 0) {
+          try
+          {
+            // if valid --> save to database 
+            context.employee.Add(EmpFromReq);
+            context.SaveChanges();
+            return RedirectToAction("Index");
+          }
+          catch (Exception ex) // general exception
+          {
+            ModelState.AddModelError("", ex.Message);
+          }
+        }
+        else
+        {
+          // error message send to view 
+          ModelState.AddModelError("DeptID", "Must choose a department");
+          // if the key is not found 
+          // the error message will pass to the div errors --> asp-validation-summary
+        }
       }
+      // if not valid back to the action that req came from with the req itself
       ViewData["DeptList"] = context.Department.ToList();
-      return View("New", EmpFromReq);  // else if not valid back to the action that req came from with the req itself
+      return View("New", EmpFromReq);  
     }
   }
 }
