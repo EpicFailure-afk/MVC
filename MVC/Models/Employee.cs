@@ -12,6 +12,7 @@ namespace MVC.Models
     [Required(ErrorMessage ="You must type a name")]
     [MaxLength(25, ErrorMessage = "write a human name !!")]
     [MinLength(2, ErrorMessage = "Name must be more than 2 letters")]
+    [UniqueName]
     public string Name { get; set; }
     //[RegularExpression(@"^[0-9] {6000, }$")]
 
