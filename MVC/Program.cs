@@ -11,7 +11,16 @@ namespace MVC
 
       var app = builder.Build();
 
+      /*
+        Types of Middleware:
+        1. app.Use() --> Execute, Invoke Next
+        2. app.Run() --> Execute, Terminate 
+        3. app.Map() --> (URL, Execute)
+      */
+
+      #region Built-in Middleware 
       // Configure the HTTP request pipeline.
+
       if (!app.Environment.IsDevelopment())
       {
         app.UseExceptionHandler("/Home/Error");
@@ -25,7 +34,48 @@ namespace MVC
           name: "default",
           pattern: "{controller=Home}/{action=Index}/{id?}")
           .WithStaticAssets();
+      #endregion
 
+      #region Custom Middleware "Inline Middleware"
+      /*
+        
+      app.Use(async (HttpContext, Next) =>
+      {
+        await HttpContext.Response.WriteAsync("1) Middleware-1\n");
+        await Next.Invoke();
+        await HttpContext.Response.WriteAsync("1) Middleware-1--- get back\n");
+      });
+
+      app.Use(async (HttpContext, Next) =>
+      {
+        await HttpContext.Response.WriteAsync("2) Middleware-2\n");
+        await Next.Invoke();
+        await HttpContext.Response.WriteAsync("2) Middleware-2--- get back\n");
+      });
+
+      app.Run(async (HttpContext) =>
+      {
+        await HttpContext.Response.WriteAsync("3) terminate\n");
+      });
+
+      // this one will not be executed bc the prev one (app.Run()) doesn't ref to it 
+      app.Use(async (HttpContext, Next) =>
+      {
+        await HttpContext.Response.WriteAsync("4) Middleware-4\n");
+        await Next.Invoke();
+      });
+      */
+      /*
+      output sequence:  
+        1) Middleware-1
+        2) Middleware-2
+        3) terminate
+        2) Middleware-2--- get back
+        1) Middleware-1--- get back
+      */
+      #endregion
+
+      // start the application 
       app.Run();
     }
   }
