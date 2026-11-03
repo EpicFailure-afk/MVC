@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+
 namespace MVC
 {
   public class Program
@@ -8,6 +10,14 @@ namespace MVC
 
       // Add services to the container.
       builder.Services.AddControllersWithViews();
+
+      // how to use --> app.UseSession() <-- Middleware
+      // // adding its configuration: 
+      // // if you let AddSession() without parameters will use the default config
+      builder.Services.AddSession(Options =>
+      {
+        Options.IdleTimeout = TimeSpan.FromMinutes(30);  // allow idle for 30 minutes using AddSession 
+      });
 
       var app = builder.Build();
 
@@ -26,6 +36,8 @@ namespace MVC
         app.UseExceptionHandler("/Home/Error");
       }
       app.UseRouting();
+
+      app.UseSession();
 
       app.UseAuthorization();
 
