@@ -3,14 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC.Models;
+using MVC.Repository;
 using MVC.ViewModel;
 
 namespace MVC.Controllers
 {
   public class EmployeeController : Controller
   {
-    Context context = new Context();
+    //Context context = new Context();
+    DepartmentRepository departmentRepository;
+    EmployeeRepository employeeRepository;
 
+    public EmployeeController()
+    {
+      departmentRepository = new DepartmentRepository();
+      employeeRepository = new EmployeeRepository();
+    }
     #region using ViewData & ViewBag
     // View Details about Emp
     //Employee/Details?id=id
@@ -32,7 +40,7 @@ namespace MVC.Controllers
       ViewData["Brchs"] = Branches;
       ViewBag.Color = "red";
 
-      Employee empModel = context.employee.FirstOrDefault(e => e.Id == id); //4 (Model)
+      Employee empModel = employeeRepository.FindByID(id); 
       // pass the model (Employee to the View)
       return View("Details", empModel);
     }
@@ -43,9 +51,7 @@ namespace MVC.Controllers
     //Employee/DetailsVM?id=1
     public IActionResult DetailsVM(int id)
     {
-      Employee empModel = context.employee
-        .Include(e => e.Department)
-        .FirstOrDefault(e => e.Id == id);
+      Employee empModel = employeeRepository.FindByID(id);
 
       List<string> branches = new List<string>();
       branches.Add("Cairo");
@@ -72,15 +78,16 @@ namespace MVC.Controllers
     //Employee/Index
     public IActionResult Index()
     {
-      return View("Index", context.employee.ToList());
+      return View("Index", employeeRepository.GetAll());
     }
 
     // handle Link to edit view 
     //Employee/Edit?id=id
+    [HttpPost]
     public IActionResult Edit(int id)
     {
-      Employee empModel = context.employee.FirstOrDefault(e => e.Id == id);
-      List<Department> DepartmentList = context.Department.ToList();
+      Employee empModel = employeeRepository.FindByID(id);
+      List<Department> DepartmentList = departmentRepository.GetAll();
       //------- create viewModel and mapping
       EmpWithDeptListViewModel EmpViewModel = new EmpWithDeptListViewModel();
       EmpViewModel.Id = empModel.Id;
@@ -102,19 +109,21 @@ namespace MVC.Controllers
       if(ModelState.IsValid)  // check what is ModelState and how it works 
       {
         // save in database
-        Employee EmpFromDB = context.employee.FirstOrDefault(e => e.Id == id);
-
+        Employee EmpFromDB = employeeRepository.FindByID(id);
+        // mapping
         EmpFromDB.Address = EmpFromRequest.Address;
         EmpFromDB.Name = EmpFromRequest.Name;
         EmpFromDB.Salary = EmpFromRequest.Salary;
         EmpFromDB.JobTitle = EmpFromRequest.JobTitle;
         EmpFromDB.ImageUrl = EmpFromRequest.ImageUrl;
         EmpFromDB.DeptID = EmpFromRequest.DeptID;
-        context.SaveChanges();
+        EmpFromDB.Id = EmpFromRequest.Id; //why??
+        employeeRepository.Update(EmpFromDB);
+        employeeRepository.Save();
         // after success
         return RedirectToAction("Index");
       }
-      EmpFromRequest.DeptList = context.Department.ToList();  // ?? 
+      EmpFromRequest.DeptList = departmentRepository.GetAll();   
       return View("Edit", EmpFromRequest);
       // In that return we send the view of "Edit"
       // with EmpFromRequest (viewModel), which contains All Emp Data + list of depts
@@ -128,7 +137,7 @@ namespace MVC.Controllers
     [HttpGet]
     public IActionResult New()
     {
-      ViewData["DeptList"] = context.Department.ToList();
+      ViewData["DeptList"] = departmentRepository.GetAll(); 
       return View("New"); // open "New" View 
     }
 
@@ -143,8 +152,10 @@ namespace MVC.Controllers
           try
           {
             // if valid --> save to database 
-            context.employee.Add(EmpFromReq);
-            context.SaveChanges();
+            //context.employee.Add(EmpFromReq);
+            employeeRepository.Add(EmpFromReq);
+            //context.SaveChanges();
+            employeeRepository.Save();
             return RedirectToAction("Index");
           }
           catch (Exception ex) // general exception
@@ -161,7 +172,7 @@ namespace MVC.Controllers
         }
       }
       // if not valid back to the action that req came from with the req itself
-      ViewData["DeptList"] = context.Department.ToList();
+      ViewData["DeptList"] = departmentRepository.GetAll();
       return View("New", EmpFromReq);  
     }
 

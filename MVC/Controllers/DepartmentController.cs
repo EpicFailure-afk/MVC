@@ -1,16 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
+using MVC.Repository;
 
 namespace MVC.Controllers
 {
   public class DepartmentController : Controller
   {
-    Context context = new Context();
+    //Context context = new Context();
+    DepartmentRepository departmentRepository;
+    public DepartmentController()
+    {
+      departmentRepository = new DepartmentRepository();
+    }
 
     //Department/Index
     public IActionResult Index()
     {
-      List<Department> departmentList = context.Department.ToList();
+      List<Department> departmentList = departmentRepository.GetAll(); //context.Department.ToList();
       return View("Index", departmentList); // Model List<Department>
     }
 
@@ -25,8 +31,10 @@ namespace MVC.Controllers
     {
       if (newDeptFromReq.Name != null)
       {
-        context.Add(newDeptFromReq);
-        context.SaveChanges();
+        //context.Add(newDeptFromReq);
+        departmentRepository.Add(newDeptFromReq);
+        //context.SaveChanges();
+        departmentRepository.Save();
         //return View("Index");
         RedirectToAction("Index");
       }
