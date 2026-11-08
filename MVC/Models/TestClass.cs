@@ -3,14 +3,14 @@
   // Simulation for the principle in SOLID
   // Dependency Inversion 
 
-  /*
-   * Although this model or BL is open for extend 
-   * but it is not closed for modification 
-   * 
-   * the problem here is that: the High level class (Stack) 
-   *  depend on the low level class (BubbleSort)
-   */ 
-  public class BubbleSort
+  // create Interface 
+  interface ISort
+  {
+    void Sort(int[] arr);
+  }
+
+  // Implement that Interface foreach type of sorting 
+  public class BubbleSort: ISort
   {
     public void Sort(int[] arr)
     {
@@ -18,7 +18,7 @@
     }
   }
 
-  public class SelectionSort
+  public class SelectionSort: ISort
   {
     public void Sort(int[] arr)
     {
@@ -26,24 +26,31 @@
     }
   }
 
+
+  // -------------------------------------------------
   class Stack // High level 
   {
     int[] arr;
-    BubbleSort BubbleSort;   // low level class
-    
+    // BubbleSort BubbleSort;   // low level class
+    ISort SortObj;  // create an obj from the interface
+
     // ctor of Stack
-    public Stack() 
+    public Stack(ISort _sortObj) // initialize an obj from the interface at the param of ctor
     {
-      BubbleSort = new BubbleSort(); // low level 
+      SortObj = _sortObj;
     }
     void SortStack()
     {
-      BubbleSort.Sort(arr);
+      SortObj.Sort(arr);
     }
   }
   
   public class TestClass
   {
-
+    void Method1()
+    {
+      Stack S1 = new Stack(new BubbleSort());
+      Stack S2 = new Stack(new SelectionSort());
+    }
   }
 }
