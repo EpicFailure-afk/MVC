@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using MVC.Models;
 using MVC.Repository;
 
 namespace MVC
@@ -18,6 +20,12 @@ namespace MVC
       builder.Services.AddSession(Options =>
       {
         Options.IdleTimeout = TimeSpan.FromMinutes(30);  // allow idle for 30 minutes using AddSession 
+      });
+
+      // Register BdContext
+      builder.Services.AddDbContext<Context>(Options =>
+      {
+        Options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
       });
 
       // Custom Service: (Register)

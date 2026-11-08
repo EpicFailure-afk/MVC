@@ -12,14 +12,16 @@ namespace MVC.Models
     {
       
     }
+
+    // ctor overload 
+    public Context(DbContextOptions opts) : base(opts)
+    {
+
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
       optionsBuilder.UseSqlServer(
-          @"Data source = localhost\SQLEXPRESS;
-          initial catalog = DOT_NET_MVC;
-          Integrated security = true;
-          Encrypt = false;
-          TrustServerCertificate=True"
+          @"Data source = localhost\SQLEXPRESS;initial catalog = DOT_NET_MVC;Integrated security = true;Encrypt = false;TrustServerCertificate=True"
         );
       base.OnConfiguring(optionsBuilder);
     }

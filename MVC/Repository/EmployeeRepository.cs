@@ -5,9 +5,9 @@ namespace MVC.Repository
   public class EmployeeRepository : IEmployeeRepository
   {
     Context context;
-    public EmployeeRepository()
+    public EmployeeRepository(Context _context)  // Don't create, ASK
     {
-      context = new Context();
+      context = _context; //new Context()  //based on Injection
     }
 
     //CRUD

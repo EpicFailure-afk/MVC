@@ -7,9 +7,9 @@ namespace MVC.Repository
     public string Id { get; set; } // to test the lifeTime of service
 
     Context context;
-    public DepartmentRepository()
+    public DepartmentRepository(Context _context)
     {
-      context = new Context();
+      context = _context; //new Context();
       Id = Guid.NewGuid().ToString(); 
     }
     //CRUD
