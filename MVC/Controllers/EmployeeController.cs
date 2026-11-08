@@ -11,13 +11,13 @@ namespace MVC.Controllers
   public class EmployeeController : Controller
   {
     //Context context = new Context();
-    DepartmentRepository departmentRepository;
-    EmployeeRepository employeeRepository;
+    IDepartmentRepository departmentRepository;
+    IEmployeeRepository employeeRepository;
 
-    public EmployeeController()
+    public EmployeeController(IDepartmentRepository deptRepo, IEmployeeRepository empRepo)
     {
-      departmentRepository = new DepartmentRepository();
-      employeeRepository = new EmployeeRepository();
+      departmentRepository = deptRepo;
+      employeeRepository = empRepo;
     }
     #region using ViewData & ViewBag
     // View Details about Emp

@@ -2,7 +2,7 @@
 
 namespace MVC.Repository
 {
-  public class EmployeeRepository
+  public class EmployeeRepository : IEmployeeRepository
   {
     Context context;
     public EmployeeRepository()

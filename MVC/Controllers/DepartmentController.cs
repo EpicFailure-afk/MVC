@@ -7,10 +7,10 @@ namespace MVC.Controllers
   public class DepartmentController : Controller
   {
     //Context context = new Context();
-    DepartmentRepository departmentRepository;
-    public DepartmentController()
+    IDepartmentRepository departmentRepository;
+    public DepartmentController(IDepartmentRepository deptRepo)
     {
-      departmentRepository = new DepartmentRepository();
+      departmentRepository = deptRepo;
     }
 
     //Department/Index
