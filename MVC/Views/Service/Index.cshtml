@@ -1,0 +1,12 @@
+﻿@inject MVC.Repository.IDepartmentRepository deptRepo    
+@*above is View Injection*@
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h3>Id From Controller @ViewBag.Id</h3>  @*Id from service controller, (ctor injection)*@
+<hr />
+<h3>Id From View @deptRepo.Id</h3>  @*Id from deptRepo, (View Injection)*@

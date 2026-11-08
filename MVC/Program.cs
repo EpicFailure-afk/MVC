@@ -23,6 +23,12 @@ namespace MVC
       // Custom Service: (Register)
       builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
       builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+      /*
+       * Types of service lifetime:
+       * - AddScoped --> once per req
+       * - AddSingleton --> once per application
+       * - AddTransient --> one for every single resolve even it comes from the same req
+      */
 
       var app = builder.Build();
 

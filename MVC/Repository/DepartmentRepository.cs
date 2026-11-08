@@ -4,11 +4,13 @@ namespace MVC.Repository
 {
   public class DepartmentRepository : IDepartmentRepository
   {
-    Context context;
+    public string Id { get; set; } // to test the lifeTime of service
 
+    Context context;
     public DepartmentRepository()
     {
       context = new Context();
+      Id = Guid.NewGuid().ToString(); 
     }
     //CRUD
     public void Add(Department obj)
