@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using MVC.Repository;
 
 namespace MVC
 {
@@ -18,6 +19,10 @@ namespace MVC
       {
         Options.IdleTimeout = TimeSpan.FromMinutes(30);  // allow idle for 30 minutes using AddSession 
       });
+
+      // Custom Service: (Register)
+      builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+      builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
       var app = builder.Build();
 
