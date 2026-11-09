@@ -10,9 +10,12 @@ namespace MVC.Filters
       // Code that written in catch 
       // context of th thrown Exception not the database Exception 
 
-      ContentResult contentResult = new ContentResult();
-      contentResult.Content = "Some Exception Throw";
-      context.Result = contentResult;
+      //ContentResult contentResult = new ContentResult();
+      //contentResult.Content = "Some Exception Throw";
+
+      ViewResult viewResult = new ViewResult();
+      viewResult.ViewName = "Error"; // which controller will throw the error?, so we will put this View in Shared 
+      context.Result = viewResult;
     }
   }
 }

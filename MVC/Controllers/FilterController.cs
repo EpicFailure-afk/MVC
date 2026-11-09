@@ -1,14 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
+
+// Or put the attr in Program.cs ( before Builder build)
 namespace MVC.Controllers
 {
+  // [HandleError] // or put the attr on a class (Controller) level
   public class FilterController : Controller
   {
-    [HandleError]
+    //[HandleError]  // i can put the attr on a single action level
     public IActionResult Index()
     {
       throw new Exception("Exception from Filter Controller");
     }
+
+    //[HandleError]
+    public IActionResult Index_2()
+    {
+      throw new Exception("Exception from Filter Controller");
+    }
+
   }
 }
