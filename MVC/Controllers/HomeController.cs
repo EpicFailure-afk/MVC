@@ -53,6 +53,7 @@ namespace MVC.Controllers
       return View();
     }
 
+    // this is the ResultFilter
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
