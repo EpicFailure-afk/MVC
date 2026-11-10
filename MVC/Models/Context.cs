@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.Diagnostics;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 namespace MVC.Models
 {
-  public class Context: DbContext
+  public class Context: IdentityDbContext<ApplicationUser>
   {
     // DbSets
     public DbSet<Employee> employee { get; set; }
