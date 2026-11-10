@@ -12,12 +12,12 @@ namespace MVC
       var builder = WebApplication.CreateBuilder(args);
 
       // Add services to the container.
-      //builder.Services.AddControllersWithViews();
+      builder.Services.AddControllersWithViews();
 
-      builder.Services.AddControllersWithViews(Options =>
-      {
-        Options.Filters.Add(new HandleErrorAttribute());
-      });
+      //builder.Services.AddControllersWithViews(Options =>
+      //{
+      //  Options.Filters.Add(new HandleErrorAttribute());
+      //});
 
 
       // how to use --> app.UseSession() <-- Middleware
