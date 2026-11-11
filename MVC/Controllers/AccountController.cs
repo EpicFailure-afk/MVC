@@ -36,7 +36,7 @@ namespace MVC.Controllers
 
         // save at database
         //UserManager<ApplicationUser> manager = new UserManager<ApplicationUser>();
-        IdentityResult result = await userManager.CreateAsync(appUser);
+        IdentityResult result = await userManager.CreateAsync(appUser, UserViewModel.Password);
         if (result.Succeeded)
         {
           // create cookie

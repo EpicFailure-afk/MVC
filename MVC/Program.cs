@@ -36,7 +36,13 @@ namespace MVC
       });
 
       // Add Identity Service
-      builder.Services.AddIdentity<ApplicationUser, IdentityRole>() // inject UserManager and ManagerStore
+      builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
+      {
+        Options.Password.RequireDigit = false;
+        Options.Password.RequiredLength = 4;
+        Options.Password.RequireNonAlphanumeric = false;
+        Options.Password.RequireUppercase = false;
+      }) // inject UserManager and ManagerStore
         .AddEntityFrameworkStores<Context>();  // change the context from IdentityDbContext to Context
 
       // Custom Service: (Register)
