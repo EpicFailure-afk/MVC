@@ -52,5 +52,11 @@ namespace MVC.Controllers
       }
       return View("Register", UserViewModel);
     }
+
+    public IActionResult SignOut()
+    {
+      signInManager.SignOutAsync();
+      return View("Register");
+    }
   }
 }
