@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using MVC.Repository;
 
@@ -14,6 +15,7 @@ namespace MVC.Controllers
     }
 
     //Department/Index
+  [Authorize]
     public IActionResult Index()
     {
       List<Department> departmentList = departmentRepository.GetAll(); //context.Department.ToList();

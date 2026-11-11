@@ -75,6 +75,7 @@ namespace MVC
 
       app.UseSession();
 
+      app.UseAuthentication(); // check if the current user has a cookie or not 
       app.UseAuthorization();
 
       app.MapStaticAssets();
