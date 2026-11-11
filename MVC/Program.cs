@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MVC.Models;
@@ -33,6 +34,10 @@ namespace MVC
       {
         Options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
       });
+
+      // Add Identity Service
+      builder.Services.AddIdentity<ApplicationUser, IdentityRole>() // inject UserManager and ManagerStore
+        .AddEntityFrameworkStores<Context>();  // change the context from IdentityDbContext to Context
 
       // Custom Service: (Register)
       builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();

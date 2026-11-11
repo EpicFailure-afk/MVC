@@ -4,6 +4,9 @@
   2) create class ApplicationUser: IdentityUser --> (create it even if it will be empty) 
     - create in Model 
   3) Edit Context --> Context: IdentityDbContext<ApplicationUser>
-  4) add-migration
-  5) update-database
+  4) add-migration & update-database
+  5) create AccountController
+  6) create RegisterViewModel
+  7) Register Action 
+  8) register Identity Service at Program Calss
 */
