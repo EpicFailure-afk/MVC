@@ -53,9 +53,37 @@ namespace MVC.Controllers
       return View("Register", UserViewModel);
     }
 
-    public IActionResult SignOut()
+    //SignIn
+    [HttpGet]
+    public IActionResult Login()
     {
-      signInManager.SignOutAsync();
+      return View("Login");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SaveLogin(LoginUserViewModel userViewModel)
+    {
+      if (ModelState.IsValid)
+      {
+        //check if user found
+        ApplicationUser appUser = await userManager.FindByNameAsync(userViewModel.Name);
+        if (appUser != null)
+        {
+          bool found = await userManager.CheckPasswordAsync(appUser, userViewModel.Password);
+          if (found == true)
+          {
+            await signInManager.SignInAsync(appUser, userViewModel.RememberME);
+            return RedirectToAction("Index", "Department");
+          }
+        }
+        ModelState.AddModelError("", "invalid user name or password");
+      }
+      return View("Login", userViewModel);
+    }
+
+    public async Task<IActionResult> SignOut()
+    {
+      await signInManager.SignOutAsync();
       return View("Register");
     }
   }
