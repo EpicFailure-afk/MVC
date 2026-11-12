@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using MVC.ViewModel;
+using System.Security.Claims;
 
 namespace MVC.Controllers
 {
@@ -72,7 +73,12 @@ namespace MVC.Controllers
           bool found = await userManager.CheckPasswordAsync(appUser, userViewModel.Password);
           if (found == true)
           {
-            await signInManager.SignInAsync(appUser, userViewModel.RememberME);
+            List<Claim> claims = new List<Claim>(); // create list of claims 
+            claims.Add(new Claim("userAddress", appUser.Address)); // fill it with the extra info 
+
+            // SignInWithClaimsAsync --> 1. ApplicationUser, 2.isPresisted, 3.extra info
+            await signInManager.SignInWithClaimsAsync(appUser, userViewModel.RememberME, claims);
+            //await signInManager.SignInAsync(appUser, userViewModel.RememberME);
             return RedirectToAction("Index", "Department");
           }
         }
