@@ -184,5 +184,11 @@ namespace MVC.Controllers
         return Json(true);
       return Json(false);
     }
+
+    //Employee/EmpCardPartial/1
+    public IActionResult EmpCardPartial(int id) // calling using Ajax (partial req)
+    {
+      return PartialView("_EmpCard", employeeRepository.FindByID(id));
+    }
   }
 }

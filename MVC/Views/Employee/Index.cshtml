@@ -10,7 +10,7 @@
 <a asp-action="New" asp-controller="Employee">New</a>
 
 <hr />
-
+<div id="div1" style="border:2px solid blue"></div>
 <table class="table table-hover table-bordered">
     <tr>
         <th>Id</th>
@@ -25,6 +25,22 @@
             <td>@item.Name</td>
             <td>@item.Salary</td>
             <td><a href="/Employee/Edit/@item.Id">Edit</a></td>
+            <td><a href="/Employee/EmpCardPartial/@item.Id" onclick="GetEmpData(@item.Id)">Details</a></td>
         </tr>
     }
 </table>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    const GetEmpData = (empId) => {
+        event?.preventDefault()
+        $.ajax({
+            url: `/Employee/EmpCardPartial?id=${empId}`,
+            success: function (result) {
+                // $("#div1").html(result);
+                // console.log(result)
+                document.getElementById("div1").innerHTML = result;
+            },
+        });
+    }
+</script>
