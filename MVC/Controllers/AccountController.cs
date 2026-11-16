@@ -26,6 +26,7 @@ namespace MVC.Controllers
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> SaveRegister(RegisterViewModel UserViewModel)
     {
       if(ModelState.IsValid)
@@ -65,6 +66,7 @@ namespace MVC.Controllers
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken] // reqs from ['_request
     public async Task<IActionResult> SaveLogin(LoginUserViewModel userViewModel)
     {
       if (ModelState.IsValid)
