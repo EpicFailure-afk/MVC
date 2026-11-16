@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC.ViewModel;
 
 namespace MVC.Controllers
 {
+  [Authorize(Roles = "Admin")] // --> search user claims (there is attr(Role) its value(Admin))
   public class RoleController : Controller
   {
     // Injection 

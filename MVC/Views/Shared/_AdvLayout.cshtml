@@ -33,8 +33,12 @@
                     @if (User.Identity.IsAuthenticated == true) {
                             <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="Index" asp-controller="Employee">Employees</a></li>
                             <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="Index" asp-controller="Department">Department</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="SignOut" asp-controller="Account">Logout</a></li>
+                            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="SignOut" asp-controller="Account">Logout</a></li>
                             <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="Index" asp-controller="Account">Welcome, @User.Identity.Name</a></li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="AddRole" asp-controller="Role">Add Role</a></li>
+                        }
                         }
                         else
                         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using MVC.ViewModel;
@@ -40,6 +41,8 @@ namespace MVC.Controllers
         IdentityResult result = await userManager.CreateAsync(appUser, UserViewModel.Password);
         if (result.Succeeded)
         {
+          //assign to role 
+          await userManager.AddToRoleAsync(appUser, "Admin");
           // create cookie
           //SignInManager<ApplicationUser> signIn = new SignInManager<ApplicationUser>() // ask do not create
           await signInManager.SignInAsync(appUser, isPersistent: false); // false means the cookie will be per session 
