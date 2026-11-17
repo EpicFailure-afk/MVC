@@ -9,19 +9,24 @@ namespace MVC.Controllers
   {
     //Context context = new Context();
     IDepartmentRepository departmentRepository;
-    public DepartmentController(IDepartmentRepository deptRepo)
+    IEmployeeRepository empRepo;
+    public DepartmentController(IDepartmentRepository deptRepo, IEmployeeRepository _empRepo)
     {
       departmentRepository = deptRepo;
+      empRepo = _empRepo;
     }
 
+    #region view all depts
     //Department/Index
-  [Authorize]
+    [Authorize]
     public IActionResult Index()
     {
       List<Department> departmentList = departmentRepository.GetAll(); //context.Department.ToList();
       return View("Index", departmentList); // Model List<Department>
     }
+    #endregion
 
+    #region add department
     [HttpGet] // only get req are allowed 
     public IActionResult Add()
     {
@@ -42,5 +47,20 @@ namespace MVC.Controllers
       }
       return View("Add", newDeptFromReq); // why we put newDeptFromReq
     }
+    #endregion
+
+    //department/DeptEmps
+    public IActionResult DeptEmps()
+    {
+      return View("DeptEmps", departmentRepository.GetAll());
+    }
+
+    //department/GetEmpsByDeptId?deptID=1
+    public IActionResult GetEmpsByDeptId(int deptID)
+    {
+      List<Employee> EmpList = empRepo.GetByDeptID(deptID);
+      return Json(EmpList);
+    }
+
   }
 }

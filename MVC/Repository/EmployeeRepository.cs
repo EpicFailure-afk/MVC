@@ -37,5 +37,10 @@ namespace MVC.Repository
     {
       context.SaveChanges();
     }
+
+    public List<Employee> GetByDeptID(int deptID)
+    {
+      return context.employee.Where(e => e.DeptID == deptID).ToList();
+    }
   }
 }

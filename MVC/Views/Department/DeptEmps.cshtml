@@ -1,0 +1,43 @@
+﻿@model List<Department>
+
+<h1>Department Employees</h1>
+
+<select id="DeptID" name="DeptID" class="form form-control" onchange="GetEmp()">
+	@foreach(var deptItem in Model)
+	{
+		<option value="@deptItem.Id">
+			@deptItem.Name
+		</option>
+	}
+</select>
+
+<br />
+
+<select id="Emps" name="Emps" class="form form-control">
+
+</select>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+	const GetEmp = () => {
+		let deptID = document.getElementById("DeptID")?.value
+		
+		let empElement = document.getElementById("Emps")
+		empElement.innerHTML = ""
+
+		//Ajax call to endpoint wich return json 
+		$.ajax({
+			url: `/department/GetEmpsByDeptId?deptID=${deptID}`,
+			success: function (result) {
+				console.log(result)
+				for (let emp of result) {
+					empElement.innerHTML += `<option value=${emp.id}>${emp.name}</option>`;
+				}
+			}
+		});
+	}
+</script>
+
+
+
+

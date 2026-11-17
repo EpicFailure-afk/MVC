@@ -10,5 +10,7 @@ namespace MVC.Repository
     List<Employee> GetAll();
     Employee FindByID(int id);
     void Save();
+
+    public List<Employee> GetByDeptID(int deptID);
   }
 }
