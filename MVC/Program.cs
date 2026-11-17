@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MVC.Models;
@@ -79,6 +80,31 @@ namespace MVC
       app.UseAuthorization();
 
       app.MapStaticAssets();
+
+      app.MapControllerRoute("Route1", "R1/{name:string}/{age:int:max(90):min(18)}/{color?}",
+          new
+          {
+            controller = "Route",
+            action = "Method1"
+          }
+        );
+
+
+      //app.MapControllerRoute("Route1", "R/{action=Method1}",
+      //    new
+      //    {
+      //      controller="Route",
+      //    }
+      //  );
+
+      app.MapControllerRoute("Route2", "R2",
+          new
+          {
+            controller="Route",
+            action="Method2"
+          }
+        );
+
       app.MapControllerRoute(
           name: "default",
           pattern: "{controller=Home}/{action=Index}/{id?}")
